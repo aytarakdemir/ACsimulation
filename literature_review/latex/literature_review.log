@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  31 OCT 2021 22:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.9.5)  3 NOV 2021 23:37
 entering extended mode
 **./literature_review.tex
 (literature_review.tex
@@ -73,8 +73,23 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen147
 \Gin@req@width=\dimen148
+) (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+
+(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 )
-(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.s
+ty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+))
+(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count193
+)) (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.st
+y
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen149
 \lightrulewidth=\dimen150
@@ -86,15 +101,14 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen156
 \cmidrulekern=\dimen157
 \defaultaddspace=\dimen158
-\@cmidla=\count193
-\@cmidlb=\count194
+\@cmidla=\count194
+\@cmidlb=\count195
 \@aboverulesep=\dimen159
 \@belowrulesep=\dimen160
-\@thisruleclass=\count195
-\@lastruleclass=\count196
+\@thisruleclass=\count196
+\@lastruleclass=\count197
 \@thisrulewidth=\dimen161
-)
-(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
+) (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
 Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
 \col@sep=\dimen162
 \ar@mcellbox=\box50
@@ -135,20 +149,20 @@ Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
 \caption@hangindent=\dimen170
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count197
-\c@continuedfloat=\count198
+\c@caption@flags=\count198
+\c@continuedfloat=\count199
 )
-\c@KVtest=\count199
+\c@KVtest=\count266
 \sf@farskip=\skip55
 \sf@captopadj=\dimen171
 \sf@capskip=\skip56
 \sf@nearskip=\skip57
-\c@subfigure=\count266
-\c@subfigure@save=\count267
-\c@lofdepth=\count268
-\c@subtable=\count269
-\c@subtable@save=\count270
-\c@lotdepth=\count271
+\c@subfigure=\count267
+\c@subfigure@save=\count268
+\c@lofdepth=\count269
+\c@subtable=\count270
+\c@subtable@save=\count271
+\c@lotdepth=\count272
 \sf@top=\skip58
 \sf@bottom=\skip59
 ) (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
@@ -222,11 +236,16 @@ Package tocloft Info: The document has section divisions on input line 51.
 \cftbeforesubtabskip=\skip103
 \cftsubtabindent=\skip104
 \cftsubtabnumwidth=\skip105
+
+
+Package tocloft Warning: \@starttoc has already been redefined; tocloft bailing
+ out. on input line 1156.
+
 )
 (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count272
+\l__color_backend_stack_int=\count273
 \l__pdf_internal_box=\box52
 ) (literature_review.aux)
 \openout1 = `literature_review.aux'.
@@ -284,16 +303,16 @@ LaTeX Font Info:    ... okay on input line 61.
 (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count273
+\scratchcounter=\count274
 \scratchdimen=\dimen172
 \scratchbox=\box53
-\nofMPsegments=\count274
-\nofMParguments=\count275
+\nofMPsegments=\count275
+\nofMParguments=\count276
 \everyMPshowfont=\toks24
-\MPscratchCnt=\count276
+\MPscratchCnt=\count277
 \MPscratchDim=\dimen173
-\MPnumerator=\count277
-\makeMPintoPDFobject=\count278
+\MPnumerator=\count278
+\makeMPintoPDFobject=\count279
 \everyMPtoPDFconversion=\toks25
 )
 (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
@@ -309,15 +328,6 @@ Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
 (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
 keys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-))
-(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
-Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
-(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
-Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
-)
-(C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.s
-ty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 ))
 (C:\Users\aytar\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
 .sty
@@ -349,24 +359,24 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 62.
  [1
 
-{C:/Users/aytar/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+{C:/Users/aytar/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2]
 (literature_review.aux) ) 
 Here is how much of TeX's memory you used:
- 4509 strings out of 478864
- 75933 string characters out of 2848661
- 381221 words of memory out of 3000000
- 22387 multiletter control sequences out of 15000+600000
+ 4845 strings out of 478864
+ 80261 string characters out of 2848661
+ 393763 words of memory out of 3000000
+ 22716 multiletter control sequences out of 15000+600000
  407971 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,6n,79p,238b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,11n,79p,512b,199s stack positions out of 5000i,500n,10000p,200000b,80000s
 <C:/Users/aytar/AppData/Local/Programs/MiKTeX/fonts/ty
 pe1/public/amsfonts/cm/cmr10.pfb><C:/Users/aytar/AppData/Local/Programs/MiKTeX/
 fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/aytar/AppData/Local/Programs
 /MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/aytar/AppData/Local/
 Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss12.pfb>
-Output written on literature_review.pdf (1 page, 47738 bytes).
+Output written on literature_review.pdf (2 pages, 60921 bytes).
 PDF statistics:
- 26 PDF objects out of 1000 (max. 8388607)
+ 29 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
