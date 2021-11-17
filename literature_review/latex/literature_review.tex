@@ -72,6 +72,11 @@ Bell-LaPadula Model was proposed in [cite Bell-Lapadula], which focused on the c
 The model can be summarized by ``write up, read down'', subjects with low clearance levels cannot access to the high security objects. 
 Subjects with high clearance levels cannot write down, thus maintaining the confidentiality of the data.
 
+A model for determining the privileges of the subjects was proposed by Lampson in [cite Lampson].
+In an access control matrix, columns are objects and each row is a subject.
+Permissions for each subjects is stored, namely, read (r), write(w), execute(x).
+Access control matrix is not used in practice mainly due to the space requirements.
+
 United States Department of Defense (DoD) published Trusted Computer System Evaluation Criteria (TCSEC) [cite TCSEC] in the 1980s. 
 The goal of the document was to set standards for the IT systems in the companies working for the United States government. 
 These specifications led to the concept of Multilevel Security. 
@@ -83,7 +88,8 @@ The objects have classifications depending on the importance of the data.
 The subjects have security clearance levels that allow them to access to the appropriate object.
 
 Mandatory Access Control (MAC) and Discretionary Access Control (DAC) have been defined in the TCSEC. 
-In MAC, the objects and the subjects cannot be altered.        Subject-object interaction is performed in a hierarchical manner. 
+In MAC, the objects and the subjects cannot be altered.
+Subject-object interaction is performed in a hierarchical manner. 
 In DBAC, a subject with a clearance can give another subject a permission to access a specific security level.
 
 The models which are going to be simulated in this paper have their roots in the models which have been introduced up until now.  
@@ -98,6 +104,18 @@ In [cite blobel], Blobel defines various standards for modelling security servic
 In the document model, processes are documented and they show how processes interact with other data and documents are protected by signatures. 
 Another model defined is the policy model, which involves using a formal language to define a policy. 
 Various examples are provided, such as Object Constraint Language (OCL) and XACML.
+
+Penetration testing is another concept related to the simulation which is plannes for this study.
+In a penetration testing attempt, system security policy in place is exposed to controlled attacks.
+In [cite Weissman- Penetration testing], rules for developing a strong penetration testing plan is established by Weissman.
+The rules are satisfied when a predetermined amount of security vulnerabilities are found, testing has continued for a certain amount of time and the security measures are overcome in order to harm the system resources.
+
+Linde showcases another penetration testing for operating systems [cite Linde].
+Using the Flaw Hypothesis Methodology, system is analyzed for attack possibilities.
+The proposed methodology consists of four steps.
+A hypothesis for a flaw is developed, followed by the confirmation of the hypothesis by carrying out penetration testing such as large volume inputting.
+Next step is to generalize it by analyzing and categorizing the flaw.
+The final step is to fix the flaws which might lead to system damage.
 
 Ficco develops a simulation platform for testing cybersecurity systems in [cite Ficco]. 
 The network in which the attacks are being carried out are modeled using various network modeling tools. 
