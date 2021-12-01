@@ -55,7 +55,7 @@
 
 \title{Thesis Journal \\ Week 1}
 \author{Aytar Akdemir}
-%\date{} % Activate to display a given date or no date (if empty),
+\date{September 5, 2021} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
 
 \begin{document}
@@ -63,11 +63,16 @@
 
 \section{Types of Access Control}
 
-First step is to determine the types of AC systems to be simulated. These could be merged, removed. Other AC systems might be added. In this section, a simple description of the AC systems are specified. The goal of this part is to determine which of the specified AC systems are suitable to model and simulate.
+First step is to determine the types of AC systems to be simulated.
+These could be merged, removed. Other AC systems might be added.
+In this section, a simple description of the AC systems are specified.
+The goal of this part is to determine which of the specified AC systems are suitable to model and simulate.
 
 \subsection{Mandatory Access Control}
 
-Subjects and objects have security attributes. When a subject tries to access an object, the operation is tested if it complies with the policy. Operationg system enforces the policy rules.
+Subjects and objects have security attributes.
+When a subject tries to access an object, the operation is tested if it complies with the policy.
+Operationg system enforces the policy rules.
 
 Security Policy Administrator controls the policies, users cannot change policy.
 
@@ -78,12 +83,14 @@ Subjects can transfer permissions to other subjects.
 
 \subsection{Role-based Access Control}
 
-Roles are created for different job functions and assigned to users. Permissions come with the role and there is no need for the micromanagement of the permissions.
+Roles are created for different job functions and assigned to users.
+Permissions come with the role and there is no need for the micromanagement of the permissions.
 
 
 \subsection{Identity-based Access Control}
 
-A user can only access to certain resources if their identity can be matched. A mechanism to authenticate the identity of the user is required. (e.g. Biometric readings)
+A user can only access to certain resources if their identity can be matched.
+A mechanism to authenticate the identity of the user is required. (e.g. Biometric readings)
 
 
 \subsection{Attribute-based Access Control}
@@ -103,16 +110,19 @@ Focuses on Subject - action - object
 \item Activity: Actions are grouped to comply to the same rules
 \item View: Set of objects with the same security rule
 \end{itemize}
-Every security model is defined by an organization and is parametrized by it. The model includes permissions, obligations and prohibitions.
+Every security model is defined by an organization and is parametrized by it.
+The model includes permissions, obligations and prohibitions.
 
 
 \subsection{Lattice-based Access Control}
 
-A lattice is used to define the security levels of objects and clearance levels of the subjects. A subject can only access an object if the clearance level is higher than the security level of the object.
+A lattice is used to define the security levels of objects and clearance levels of the subjects.
+A subject can only access an object if the clearance level is higher than the security level of the object.
 
 
 \subsection{Graph-based Access Control}
-The access rights are granted to objects but also accounts. Difference from the  role-based access control is GBAC uses a organizational query language for defining access rights while RBAC uses enumeration.
+The access rights are granted to objects but also accounts.
+Difference from the  role-based access control is GBAC uses a organizational query language for defining access rights while RBAC uses enumeration.
 
 Two building blocks
 \begin{itemize}		
@@ -128,7 +138,9 @@ Run-time rights of a code is determined by examining the attributes of the code 
 
 \section{Modelling}
 
-After determining which ones will be used, all AC systems should be modelled using flowcharts. All flowcharts should be standardized for comparison. These flowcharts will be used as guides when programming the simulation.
+After determining which ones will be used, all AC systems should be modelled using flowcharts.
+All flowcharts should be standardized for comparison.
+These flowcharts will be used as guides when programming the simulation.
 
 
 \end{document}
