@@ -92,13 +92,53 @@ In MAC, the objects and the subjects cannot be altered.
 Subject-object interaction is performed in a hierarchical manner. 
 In DBAC, a subject with a clearance can give another subject a permission to access a specific security level.
 
+\subsection{Formal Models}
+
+\textbf{Clark-Wilson} In [Cite ClarkWilson], Clark defines an integrity model that focuses on the consistency of the transactions.
+The data checked for integrity are called constrained data items (CDI).
+The data which is not controlled are called unconstrained data items (UDI).
+There are two mechanisms to ensure the integrity of the system.
+
+\begin{itemize}
+\item Integrity verification procedures (IVP): IVP ensures CDIs within the system comply with the integrity specifications.
+\item Transformation procedures (TP): TP ensures state transitions go smoothly, CDI should transition between a valid state to another valid state. No other entity then TP is permitted to change the CDIs.
+\end{itemize}
+
+Each TP and the every CDI it controls should be kept in a list in the form of relations.
+This list will be used for guaranteeing that the CDIs are not changed by something other than the TP.
+
+The lists of relations may only be changed by a certain agent entitled to certify.
+This makes it clear that Clark-Wilson is not discretionary.
+
+\textbf{Take-Grant}
+
+Take-Grant model was introduced in [cite Take-Grant] by Lipton.
+The model uses directed graphs to prove the security of the system. In order to achieve the proof, several rules are defined;
+
+\begin{itemize}
+\item Take: Subject takes the rights of a subject if it has the t (take) right to it.
+\item Grant: Subject grants the pointed subject its rights if the subject has the g (grant) right pointing right to it.
+\item Create: Subject can create a new node with the tg rights to it.
+\item Remove: Subjects can remove the thier rights pointing to other object.
+\end{itemize}
+
+These rules are used to analyse the reach of an attack on the system.
+
+\textbf{State Machine}
+
+---
+
+\textbf{Petri Net (Place/Transition)}
+
+---
+
 The models which are going to be simulated in this paper have their roots in the models which have been introduced up until now.  
 
 \section{Related Work}
 
 The objective in this article is to develop a simulation enviroment for the various authorization schemes. 
 This simulation will be used to perform vulnerability analysis on a system. 
-This will help determining the best authorization scheme for a system, depending on its structure and needs.
+This will help determine the best authorization scheme for a system, depending on its structure and needs.
 
 In [cite blobel], Blobel defines various standards for modelling security services using formal models. 
 In the document model, processes are documented and they show how processes interact with other data and documents are protected by signatures. 
