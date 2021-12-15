@@ -92,7 +92,10 @@ As an example of the multiplicity constraint, file creation can be performed mul
 
 An example of a flow graph is given below.
 
+\begin{figure}[h!]
 \includegraphics[width=\textwidth]{flow}
+\caption{Order and Multiplicity Constraints}
+\end{figure}
 
 \subsection{Petri Net Representation}
 
@@ -104,21 +107,77 @@ Inputs to an Action might have a natural number and a condition property:
 \item Condition can further constrain if a token is accepted by the Action.
 \item The natural number is the minimum number of tokens accepted.
 \end{itemize}
-If the output has a natural number, the specified amount of tokens will be placed to the next Place.
+The output has a natural number, the specified amount of rights will be placed to the next Place.
+Initializers are also assigned to outputs, which initializes the attributes of the rights.
 The condition on the output is the additional constraints that are not tied to the inputs. 
 
+\begin{figure}[h!]
 \includegraphics[width=\textwidth]{petri}
+\caption{Petri nets}
+\end{figure}
 
 If the place after the action doesn't need to have a token, i.e. just prove it has the tokens to obtain a right, the token can be returned to the place before the action.
 After the transition, the state is unchanged even though the action has been performed.
 
+\begin{figure}[h!]
 \includegraphics[width=\textwidth]{petri2}
+\caption{Unchanged place}
+\end{figure}
 
 The tokens attributes might change after the action. After the action, a mutator changes the value of the token. It is possible to have more than one transition for different conditions.
 
+\begin{figure}[h!]
 \includegraphics[width=\textwidth]{petri3}
+\caption{Conditions for different states}
+\end{figure}
 
 
+\subsection{Applying Petri Net to Flow Chart}
 
+Multiplicity of an edge has two cases to be simulated.
+
+\begin{itemize}
+\item multiplicity(e)=n. Multiplicity is limited. Action1 initializes n rights. n tokens will be placed at the Place1. Every time the next action, Action2, is performed, a token is submitted to the next place, Place2, and subtracted from the Place1.
+\item  multiplicity(e)=*. Multiplicity is unlimited. Action1 initializes 1 right. 1 token will be at the Place1. A double sided arc is used between Place1 and the Action2. Therefore, token at the Place1 will be put back in place everytime Action2 is performed (as in Figure 4).
+\end{itemize}
+
+\begin{figure}[h!]
+\includegraphics[width=\textwidth]{multip1}
+\caption{Limited multiplicity}
+\end{figure}
+
+\begin{figure}[h!]
+\includegraphics[width=\textwidth]{multip2}
+\caption{Unlimited multiplicity}
+\end{figure}
+
+\subsection{Linkability Graphs}
+
+Linkability graphs show the links between the data. In a case of attack, linkability case can be used to trace the criminal content back to the attacker.
+
+In a linkability graph, a node might represent:
+
+\begin{itemize}
+\item Actions
+\item Rights
+\item Environmental variables
+\end{itemize}
+
+Each edge represents a connection between two units. Linkability graohs are undirected. An edge \(l\) has three properties:
+
+\begin{itemize}
+\item cardinalityRatio(\(l\)): Maximum number of unit instances this unit can be linked directly. 1:1 or 1:N
+\item linkCond(\(l\)): Conditions that must be fulfilled to reveal the link.
+\item linkBy(\(l\)): Returns the set of subjects that are required to reveal the link.
+\end{itemize}
+
+We have three queries we can use and combine in order to reach to the information we want.
+
+\begin{itemize}
+
+\item LinkabilityGraph(Graph, SetofSubjects): Returns the nodes that can be linked by a set of subjects. Returns a subgraph.
+\item LinkabilityGraph(Graph, SetofConditions): Returns the nodes that can be linked when the set of conditions is fulfilled. Returns a subgraph.
+\item existsLink(Graph, [Action1, Action2 ]): Returns whether two actions are linkable.
+\end{itemize}
 
 \end{document}
