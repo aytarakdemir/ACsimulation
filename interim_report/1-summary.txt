@@ -1,0 +1,47 @@
+
+SUMMARY
+
+	English summary should be at least one full page and should not be longer than 2 pages,.
+
+	Summary should be styled with “normal” style.
+
+
+Authorization models are used for managing access to the resources in the system.
+There have been several models proposed in order to address the problem of authorization management.
+This article examines the history of the access control and authorization mechanisms in order to obtain a more capable authorization model.
+The ultimate goal of the article is to implement the proposed model in a simulation environment.
+The model will be represented by various example systems in the simulation.
+The efficacy of authorization system in these example systems will be analyzed by penetration testing. 
+
+Authorization models are generally studied with the use of formal models.
+Formal models help to visualize the system in a systematic manner.
+The use of formal models also allows for a more detailed mathematical analysis of the given system.
+Several formal models were proposed for the analysis of the authorization mechanisms.
+Each of the formal models have different use cases and they can be combined with other techniques to enhance their performance.
+Since the selected formal model will be used for the implementation of the simulation, it should be easy to hold in memory.
+In large systems, formal model used is crucial for the performance of the simulation.
+Large systems, should be able to be abstracted in a manner that will make the computation reasonably fast.
+
+One of the main solutions for representing the system is using graphs.
+In the graph based formal models, such as Take-Grant or Clark-Wilson, representing the whole system with graphs has some drawbacks.
+Representing large scale systems in a graph based formal model will be difficult on paper and even more difficult on a simulation due to memory and time constraints.
+If it's assumed that the penetration testing would attack on every node, simulating such scenario would be taxing on the computer.
+A possible solution for this problem would be to use fuzzing for attacking the system.
+Fuzzing is a method for selecting the nodes and edges on a graph, which would assist on randomly selecting the part of the system that will be exposed to an attack.
+
+The decided formal model for the simulation is petri net model.
+Petri net model is not specific to the computer security.
+It is used for determining the contamination of the nodes in a system.
+In the simulation, a selected part of the system will be represented with the petri net in order to analyze the risk of an unauthorized access.
+Usage of fuzzing is still a possibility, since it provides a considerable performance boost.
+
+The simulation will need a policy enforcement point (PEP) in order to evaluate access requests and permit or deny according to the policies of the authorization model.
+A PEP will be implemented using eXtensible Access Control Markup Language (XACML).
+There are various engines to run XACML, a policy written in XACML will be input to the engine to form the PEP.
+Requests could also be generated using the XACML engines.
+
+The authorization policy which uses the petri nets will be written in XACML.
+Simulation will send requests using XACML.
+In order to analyze the policy, simulated attacks will be sent in the simulation.
+There will be a risk of an attack bypassing the PEP, this will be achieved by giving that particular request a exemption from PEP.
+The probability of the exemption will be a parameter in the simulation. 
