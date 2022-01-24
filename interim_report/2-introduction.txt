@@ -1,0 +1,56 @@
+
+INTRODUCTION AND PROBLEM DEFINITION
+	
+	Caution: Each section should start in a new page.
+	
+	This section introduces the term project by summarizing the main characteristics of the system to be implemented.
+	Student may include very rough technical details but rather the main problem and how the designed system is planned to remedy the problem is to be defined in this section.
+	This section is expected not to exceed two or three pages.
+
+
+INTRODUCTION
+
+Authorization policies are used for managing access to the resources in a system.
+In a computer system, subjects are the users of the system, the subjects access to the objects in the system.
+Objects are files in the memory or disk.
+Subjects either access to the objects directly, or utilize processes that use objects.
+If a subject runs a process, privileges of the subject are transferred to the process.
+
+A policy defines rules which dictates which subjects can access to which objects.
+A Policy Enforcement Point (PEP) is necessary for the policy to be applied within a system.
+In a personal computer, when a subject or process attempts to access an object, the operating system of the computer applies a PEP.
+
+An authorization policy is a collection of rules for managing the access to the objects.
+There are various access policy types such as attribute based (ABAC), role based (RBAC), discretionary (DAC), mandatory (MAC); which will be discussed in the literature review chapter.
+The type of authorization policy used differs according to the needs of the system.
+
+
+
+
+PROBLEM DEFINITION
+
+The problem addressed in this paper is the lack of analysis tools for individual authorization systems.
+A simulation for conducting the risk analysis on a system with an authorization policy will be developed at the end of the paper.
+Risk analysis will involve sending random attacks on a system and giving the attacker a bypass.
+The bypassing is assumed to be a risk, and is determined by the probability of bypass parameter.
+The simulation performes the vulnerability analysis according to the number of compromised nodes.
+
+The Policy Enforcement Point (PEP) gives access to the subjects by checking if their requests comply with the policy.
+PEP will be implemented first.
+Simulation will send requests to the PEP, requests will also be simuated in the PEP simulation.
+
+Another problem adressed in this article is the high memory requirements for the representation of large scale systems.
+The simulation will send requests to the system for analyzing the vulnerabilities.
+The bigger the system, the slower it is to send all of the necessary requests.
+If we assume for every node, there is going to be a request the time is linear with the node count.
+The goal is to find a technique, or a formal model that will help the algorithm perform better than linear time.
+
+A Petri net model will be responsible for the privileges of the users.
+An access request by the subject will be represented in the Petri net with an action.
+In order to for the action to be executed, necessary tokens need to be in the place before the Petri net.
+The Petri net will further be introduced in the following chapter.
+
+
+
+
+

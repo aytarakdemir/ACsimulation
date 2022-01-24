@@ -35,13 +35,23 @@ It is used for determining the contamination of the nodes in a system.
 In the simulation, a selected part of the system will be represented with the petri net in order to analyze the risk of an unauthorized access.
 Usage of fuzzing is still a possibility, since it provides a considerable performance boost.
 
-The simulation will need a policy enforcement point (PEP) in order to evaluate access requests and permit or deny according to the policies of the authorization model.
-A PEP will be implemented using eXtensible Access Control Markup Language (XACML).
-There are various engines to run XACML, a policy written in XACML will be input to the engine to form the PEP.
-Requests could also be generated using the XACML engines.
+	The simulation will need a policy enforcement point (PEP) in order to evaluate access requests and permit or deny according to the policies of the authorization model.
+	A PEP will be implemented using eXtensible Access Control Markup Language (XACML).
+	There are various engines to run XACML, a policy written in XACML will be input to the engine to form the PEP.
+	Requests could also be generated using the XACML engines.
 
-The authorization policy which uses the petri nets will be written in XACML.
-Simulation will send requests using XACML.
+	The authorization policy which uses the petri nets will be written in XACML.
+	Simulation will send requests using XACML.
+	In order to analyze the policy, simulated attacks will be sent in the simulation.
+	There will be a risk of an attack bypassing the PEP, this will be achieved by giving that particular request a exemption from PEP.
+	The probability of the exemption will be a parameter in the simulation. 
+	
+The simulation will need a policy enforcement point (PEP) in order to evaluate access requests and permit or deny according to the policies of the authorization model.
+A PEP which uses a Petri net formalization will be implemented.
+A policy will be put into the simulation to form the PEP.
+The simulation also needs to generate requests for PEP to evaluate.
+
 In order to analyze the policy, simulated attacks will be sent in the simulation.
 There will be a risk of an attack bypassing the PEP, this will be achieved by giving that particular request a exemption from PEP.
-The probability of the exemption will be a parameter in the simulation. 
+The probability of the exemption will be a parameter in the simulation.
+
