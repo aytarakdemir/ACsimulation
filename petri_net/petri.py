@@ -32,6 +32,7 @@ class InputPlace:
     def trigger(self):
         self.place -= self.tokens_to_be_inputted
 
+
 # Arc that goes  transition --> place
 class OutputPlace:
     def __init__(self, place, tokens_to_be_outputted = 1):
@@ -45,3 +46,53 @@ class OutputPlace:
 
 
 #class PetriNet:
+#    def __init__(self, places, transitions):
+
+
+
+if __name__ == "__main__":
+
+    places = []
+    place_tokens = [1, 0, 2, 1]
+    for i in place_tokens:
+        place_instance = Place(i)
+        places.append(place_instance)
+
+    
+    input = []
+    input_req_token = [1, 1, 2]
+    place_list = [0, 1, 2]
+    for i in range(len(input_req_token)):
+        input_instance = InputPlace(place_list[i], input_req_token[i])
+        input.append(input_instance)
+
+
+    output = []
+    output_out_token = [1, 1, 2, 1]
+    place_list = [1, 2, 3, 0]
+    for i in range(len(output_out_token)):
+        output_instance = OutputPlace(place_list[i], output_out_token[i])
+        output.append(output_instance)
+
+
+    transitions = []
+    transition_input_count = [1, 2]
+    transition_output_count = [2, 2]
+
+
+    temp_input = []
+    for i in range(len(transition_input_count)):
+        temp_input.append(input[i:i+transition_input_count[i]])
+        i = i + transition_input_count[i] 
+
+
+    temp_output = []
+    for j in range(len(transition_output_count)):
+        temp_output.append(output[j: j+transition_output_count[j]])
+        j = j + transition_output_count[j]
+
+
+
+    transition_instance = Transition(temp_input, temp_output)
+    transitions.append(transition_instance)
+
