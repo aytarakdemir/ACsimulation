@@ -13,7 +13,7 @@ class Transition:
         self.output_places = output_places
 
     def fire(self):
-        if all(i.tokenIsSufficient for i in self.input_places):
+        if all(i.tokenIsSufficient() for i in self.input_places):
             for input in self.input_places:
                 input.trigger()
             for output in self.output_places:
@@ -30,7 +30,7 @@ class InputPlace:
         return self.place.token >= self.tokens_to_be_inputted
     
     def trigger(self):
-        self.place -= self.tokens_to_be_inputted
+        self.place.token -= self.tokens_to_be_inputted
 
 
 # Arc that goes  transition --> place
@@ -45,6 +45,7 @@ class OutputPlace:
 
 
 
+
 #class PetriNet:
 #    def __init__(self, places, transitions):
 
@@ -53,7 +54,7 @@ class OutputPlace:
 if __name__ == "__main__":
 
     places = []
-    place_tokens = [1, 0, 2, 1]
+    place_tokens = [5, 5, 5, 5]
     for i in place_tokens:
         place_instance = Place(i)
         places.append(place_instance)
@@ -63,7 +64,7 @@ if __name__ == "__main__":
     input_req_token = [1, 1, 2]
     place_list = [0, 1, 2]
     for i in range(len(input_req_token)):
-        input_instance = InputPlace(place_list[i], input_req_token[i])
+        input_instance = InputPlace(places[place_list[i]], input_req_token[i])
         input.append(input_instance)
 
 
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     output_out_token = [1, 1, 2, 1]
     place_list = [1, 2, 3, 0]
     for i in range(len(output_out_token)):
-        output_instance = OutputPlace(place_list[i], output_out_token[i])
+        output_instance = OutputPlace(places[place_list[i]], output_out_token[i])
         output.append(output_instance)
 
 
@@ -92,7 +93,37 @@ if __name__ == "__main__":
         j = j + transition_output_count[j]
 
 
+    for i in range(len(temp_input)):
+        transition_instance = Transition(temp_input[i], temp_output[i])
+        transitions.append(transition_instance)
 
-    transition_instance = Transition(temp_input, temp_output)
-    transitions.append(transition_instance)
+    for i in range(len(places)):
+        print(places[i].token)
+
+
+    print("Place0 token: " + str(output[0].place.token))
+    transitions[1].fire()
+    print("Fired transition")
+
+
+    print("Place0 token: " + str(output[0].place.token))
+    transitions[1].fire()
+    print("Fired transition")
+
+    print("Place0 token: " + str(output[0].place.token))
+    transitions[1].fire()
+    print("Fired transition")
+
+
+
+    for i in range(len(places)):
+        print(places[i].token)
+
+    # print("Input arc list: ")
+    # print(input)
+    # print("Output arc list: ")
+    # print(output)
+    # print("Transition list: ")
+    # print(transitions)
+
 
