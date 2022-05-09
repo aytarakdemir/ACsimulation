@@ -3,7 +3,8 @@
 Examine https://en.wikipedia.org/wiki/Petri_net to undestand what classes do.
 '''
 class Place:
-    def __init__(self, token):
+    def __init__(self, index, token):
+        self.index = index
         self.token = token
 
 
@@ -15,7 +16,11 @@ class Transition:
     def fire(self):
         if all(i.tokenIsSufficient() for i in self.input_places):
             for input in self.input_places:
+                # if (input.place.index == 0):
+                #     print("Changed from: " + str(input.place.token))
                 input.trigger()
+                # if (input.place.index == 0):
+                #     print("To: " + str(input.place.token))
             for output in self.output_places:
                 output.trigger()
 
@@ -30,7 +35,11 @@ class InputPlace:
         return self.place.token >= self.tokens_to_be_inputted
     
     def trigger(self):
+        # if (self.place.index == 0):
+        #     print("Changed from: " + str(self.place.token))
         self.place.token -= self.tokens_to_be_inputted
+        # if (self.place.index == 0):
+        #     print("To: " + str(self.place.token))
 
 
 # Arc that goes  transition --> place
@@ -41,6 +50,8 @@ class OutputPlace:
 
     def trigger(self):
         self.place.token += self.tokens_to_be_outputted
+        # print("Token:")
+        # print(self.place.token)
 
 
 
@@ -53,19 +64,27 @@ class OutputPlace:
 
 if __name__ == "__main__":
 
+    # Set token
     places = []
     place_tokens = [5, 5, 5, 5]
-    for i in place_tokens:
-        place_instance = Place(i)
+    for i in range(len(place_tokens)):
+        place_instance = Place(i, place_tokens[i])
         places.append(place_instance)
 
-    
+    print("---")
+    for i in places:
+        print(str(i.index) + " - " + str(i.token))
+    print("---")
+
+
     input = []
-    input_req_token = [1, 1, 2]
+    input_req_token = [2, 1, 2]
     place_list = [0, 1, 2]
     for i in range(len(input_req_token)):
         input_instance = InputPlace(places[place_list[i]], input_req_token[i])
         input.append(input_instance)
+
+
 
 
     output = []
@@ -82,42 +101,50 @@ if __name__ == "__main__":
 
 
     temp_input = []
-    for i in range(len(transition_input_count)):
-        temp_input.append(input[i:i+transition_input_count[i]])
-        i = i + transition_input_count[i] 
+    i = 0
+    a = 0 
+    while i < len(transition_input_count):
+        temp_input.append(input[a:a+transition_input_count[i]])
+        a = a + transition_input_count[i]
+        i += 1
 
 
     temp_output = []
-    for j in range(len(transition_output_count)):
-        temp_output.append(output[j: j+transition_output_count[j]])
-        j = j + transition_output_count[j]
+    j = 0
+    b = 0
+    while j < len(transition_output_count):
+        temp_output.append(output[b: b+transition_output_count[j]])
+        b = b + transition_output_count[j]
+        j += 1
 
 
     for i in range(len(temp_input)):
         transition_instance = Transition(temp_input[i], temp_output[i])
         transitions.append(transition_instance)
 
-    for i in range(len(places)):
-        print(places[i].token)
+
+    # print(transitions[0].output_places[0].tokens_to_be_outputted)
 
 
-    print("Place0 token: " + str(output[0].place.token))
-    transitions[1].fire()
+    # print("Place 0 token: " + str(output[0].place.token))
+    transitions[0].fire()
     print("Fired transition")
 
-
-    print("Place0 token: " + str(output[0].place.token))
-    transitions[1].fire()
-    print("Fired transition")
-
-    print("Place0 token: " + str(output[0].place.token))
-    transitions[1].fire()
-    print("Fired transition")
+    print("---")
+    for i in places:
+        print(str(i.index) + " - " + str(i.token))
+    print("---")
 
 
+    # print("Place0 token: " + str(output[0].place.token))
+    # transitions[1].fire()
+    # print("Fired transition")
 
-    for i in range(len(places)):
-        print(places[i].token)
+    # print("Place0 token: " + str(output[0].place.token))
+    # transitions[1].fire()
+    # print("Fired transition")
+
+
 
     # print("Input arc list: ")
     # print(input)
