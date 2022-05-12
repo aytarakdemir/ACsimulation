@@ -64,9 +64,63 @@ class OutputPlace:
 
 if __name__ == "__main__":
 
+    place_tokens = []
+
+    input_req_token = []
+    input_place_list = []
+
+    output_out_token = []
+    output_place_list = []
+
+    transition_input_count = []
+    transition_output_count = []
+
+    with open('net.txt') as f:
+        lines = f.readlines()
+        a = lines[0][:-1].split(' ')
+        a = list(map(int, a))
+
+        bc = lines[1].split('-')
+        b = bc[0].split(' ')
+        if (b[-1] == ''):
+            b = b[:-1]
+        c = bc[1][:-1].split(' ')
+        if (c[0] == ''):
+            c = c[1:]
+        b = list(map(int, b))
+        c = list(map(int, c))
+
+        de = lines[2].split('-')
+        d = de[0].split(' ')
+        if (d[-1] == ''):
+            d = d[:-1]
+        e = de[1][:-1].split(' ')
+        if (e[0] == ''):
+            e = e[1:]
+        d = list(map(int, d))
+        e = list(map(int, e))
+
+        f = lines[3][:-1].split(' ')
+        f = list(map(int, f))
+
+        g = lines[4][:-1].split(' ')
+        g = list(map(int, g))
+
+        place_tokens = a
+
+        input_req_token = b
+        input_place_list = c
+
+        output_out_token = d
+        output_place_list = e
+
+        transition_input_count = f
+        transition_output_count = g
+
+
     # Set token
     places = []
-    place_tokens = [5, 5, 5, 5]
+    # place_tokens = [5, 5, 5, 5]
     for i in range(len(place_tokens)):
         place_instance = Place(i, place_tokens[i])
         places.append(place_instance)
@@ -78,26 +132,26 @@ if __name__ == "__main__":
 
 
     input = []
-    input_req_token = [2, 1, 2]
-    place_list = [0, 1, 2]
+    # input_req_token = [2, 1, 2]
+    # input_place_list = [0, 1, 2]
     for i in range(len(input_req_token)):
-        input_instance = InputPlace(places[place_list[i]], input_req_token[i])
+        input_instance = InputPlace(places[input_place_list[i]], input_req_token[i])
         input.append(input_instance)
 
 
 
 
     output = []
-    output_out_token = [1, 1, 2, 1]
-    place_list = [1, 2, 3, 0]
+    # output_out_token = [1, 1, 2, 1]
+    # output_place_list = [1, 2, 3, 0]
     for i in range(len(output_out_token)):
-        output_instance = OutputPlace(places[place_list[i]], output_out_token[i])
+        output_instance = OutputPlace(places[output_place_list[i]], output_out_token[i])
         output.append(output_instance)
 
 
     transitions = []
-    transition_input_count = [1, 2]
-    transition_output_count = [2, 2]
+    # transition_input_count = [1, 2]
+    # transition_output_count = [2, 2]
 
 
     temp_input = []
