@@ -47,40 +47,51 @@ class OutputPlace:
         self.place.token += self.tokens_to_be_outputted
 
 
-
-
-
 class PetriNet:
     def __init__(self, filename):
-        with open(filename) as f:
+        with open(filename) as f:    
             lines = f.readlines()
             a = lines[0][:-1].split(' ')
             a = list(map(int, a))
 
-            bc = lines[1].split('-')
-            b = bc[0].split(' ')
-            if (b[-1] == ''):
-                b = b[:-1]
-            c = bc[1][:-1].split(' ')
-            if (c[0] == ''):
-                c = c[1:]
-            b = list(map(int, b))
-            c = list(map(int, c))
 
-            de = lines[2].split('-')
-            d = de[0].split(' ')
-            if (d[-1] == ''):
-                d = d[:-1]
-            e = de[1][:-1].split(' ')
-            if (e[0] == ''):
-                e = e[1:]
-            d = list(map(int, d))
-            e = list(map(int, e))
+            #inputs
+            if(lines[1] != '\n'):
+                bc = lines[1].split('-')
+                b = bc[0].split(' ')
+                if (b[-1] == ''):
+                    b = b[:-1]
+                c = bc[1][:-1].split(' ')
+                if (c[0] == ''):
+                    c = c[1:]
+                b = list(map(int, b))
+                c = list(map(int, c))
+            else:
+                b = []
+                c = []
+
+            # outputs
+            if(lines[2] != '\n'):
+                de = lines[2].split('-')
+                d = de[0].split(' ')
+                if (d[-1] == ''):
+                    d = d[:-1]
+                e = de[1][:-1].split(' ')
+                if (e[0] == ''):
+                    e = e[1:]
+                d = list(map(int, d))
+                e = list(map(int, e))
+            else:
+                d = []
+                e = []
 
             f = lines[3][:-1].split(' ')
             f = list(map(int, f))
 
-            g = lines[4][:-1].split(' ')
+            if(lines[4][-1] == '\n'):
+                g = lines[4][:-1].split(' ')
+            else:
+                g = lines[4].split(' ')
             g = list(map(int, g))
 
             place_tokens = a
@@ -151,13 +162,18 @@ class PetriNet:
         print("---------")
         
 
-
-
 if __name__ == "__main__":
 
-    petri = PetriNet('net.txt')
+    petri = PetriNet('infinite_token_loop.txt')
     petri.printPlaceTokens()
     petri.fire(0)
     petri.printPlaceTokens()
+
+# Example Net
+# 5 5 5 5
+# 2 1 2 - 0 1 2
+# 1 1 2 1 - 1 2 3 0
+# 1 2
+# 2 2
 
 
