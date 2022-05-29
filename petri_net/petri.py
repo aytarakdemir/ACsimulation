@@ -2,6 +2,8 @@
 ''' Classes are named according to the Wikipedia definition of the petri nets.
 Examine https://en.wikipedia.org/wiki/Petri_net to undestand what classes do.
 '''
+import random
+
 class Place:
     def __init__(self, index, token):
         self.index = index
@@ -13,15 +15,19 @@ class Transition:
         self.input_places = input_places
         self.output_places = output_places
 
-    def fire(self):
-        if all(i.tokenIsSufficient() for i in self.input_places):
+    def fire(self, fire_unconditionally = False):
+        if (all(i.tokenIsSufficient() for i in self.input_places)):
             for input in self.input_places:
                 input.trigger()
             for output in self.output_places:
                 output.trigger()
-            return True
+            return 0
+        elif (fire_unconditionally):
+            for output in self.output_places:
+                output.trigger()
+            return 1
         else:
-            return False
+            return 2
 
 
 # Arc that goes  place --> transition
@@ -48,7 +54,8 @@ class OutputPlace:
 
 
 class PetriNet:
-    def __init__(self, filename):
+    def __init__(self, filename, random_privilege_escalation_probability = 0.0):
+        self.random_privilege_escalation_probability = random_privilege_escalation_probability
         with open(filename) as f:    
             lines = f.readlines()
             a = lines[0][:-1].split(' ')
@@ -148,9 +155,15 @@ class PetriNet:
                 self.transitions.append(transition_instance)
 
 
-    def fire(self, transition_id):
-        if (self.transitions[transition_id].fire()):
+    def fire(self, transition_id, fire_unconditionally = False):
+        
+        if (random.random() < self.random_privilege_escalation_probability):
+            fire_unconditionally = True
+            
+        if (self.transitions[transition_id].fire(fire_unconditionally) == 0):
             print("Fired transition")
+        elif (self.transitions[transition_id].fire(fire_unconditionally) == 1):
+            print("Fired transition with unauthorized privilege escalation")
         else:
             print("Transition could not be fired.")
 

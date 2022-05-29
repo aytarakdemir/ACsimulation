@@ -1,7 +1,7 @@
 from petri import PetriNet
 
 # View photo 5 times and no more
-petri = PetriNet('net_config/photo_view_limit.txt')
+petri = PetriNet('net_config/photo_view_limit.txt', 0.5)
 petri.printPlaceTokens()
 petri.fire(0)
 petri.fire(0)
