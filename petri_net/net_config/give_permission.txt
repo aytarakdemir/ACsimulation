@@ -1,5 +1,13 @@
-1 0
-1 1 - 0 1
-1 2 - 0 1
-1 1
-2 0
+
+/place{pool0,1}
+/place{pool1,0}
+
+/transition{access}
+/transition{givePermission}
+
+/PtoT{pool0,givePermission,1}
+/PtoT{pool1,access,1}
+
+/TtoP{givePermission,pool1,2}
+
+/TtoP{access,pool0,1}

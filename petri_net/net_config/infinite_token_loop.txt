@@ -1,5 +1,8 @@
-1
-1 - 0
-1 - 0
-1
-1
+
+/place{pool0,1}
+
+/transition{access}
+
+/PtoT{pool0,access,1}
+
+/TtoP{access,pool0,1}

@@ -1,6 +1,9 @@
-5
-1 - 0
 
-1
-0
+/place{pool0,5}
+
+
+/transition{access}
+
+
+/PtoT{pool0,access,1}
 
