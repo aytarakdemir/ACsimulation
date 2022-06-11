@@ -178,11 +178,42 @@ class PetriNet:
         print("---------")
         for i in self.places:
             print("Place: " + str(i.name) + " -> " + str(i.token) + " tokens")
-        # for i in self.transitions:
-        #     print("Transition: " + i.name)
-        #     for a in i.input_places:
-        #         print(a.place.name)
         print("---------")
+
+    def writeCurrentStateToFile(self, filename):
+        f = open(filename, "w")
+        state_out = ""
+        for i in self.places:
+            place_out = "/place{" + i.name + "," + str(i.token) + "}\n"
+            state_out += place_out
+
+        state_out += "\n"
+
+        for i in self.transitions:
+            transition_out = "/transition{" + i.name + "}\n"
+            state_out += transition_out
+
+        state_out += "\n"
+
+        for i in self.input:
+            for j in self.transitions:
+                for k in j.input_places:
+                    if (i.id == k.id):
+                        input_out = "/PtoT{" + i.place.name + "," + str(j.name) + "," + str(i.tokens_to_be_inputted) + "}\n"
+                        state_out += input_out
+
+        state_out += "\n"
+
+        for i in self.output:
+            for j in self.transitions:
+                for k in j.output_places:
+                    if (i.id == k.id):
+                        output_out = "/PtoT{" + i.place.name + "," + str(j.name) + "," + str(i.tokens_to_be_outputted) + "}\n"
+                        state_out += output_out
+
+        f.write(state_out)
+        f.close()
+
         
 
 if __name__ == "__main__":
