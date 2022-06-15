@@ -9,5 +9,5 @@
 /PtoT{pool1,access,1}
 
 /TtoP{givePermission,pool1,2}
+/TtoP{givePermission,pool0,1}
 
-/TtoP{access,pool0,1}

@@ -1,13 +1,19 @@
 
 ''' Classes are named according to the Wikipedia definition of the petri nets.
-Examine https://en.wikipedia.org/wiki/Petri_net to undestand what classes do.
+Examine https://en.wikipedia.org/wiki/Petri_net to understand what each class does.
 '''
 import random
 
+infinity = 1000
+
 class Place:
-    def __init__(self, name, token):
+    def __init__(self, name, token, token_limit = infinity): # Assume has no limit for default value
         self.name = name
         self.token = token
+        self.token_limit = token_limit
+
+    def setTokenLimit(self, token_limit):
+        self.token_limit = token_limit
 
 
 class Transition:
@@ -16,19 +22,31 @@ class Transition:
         self.input_places = input_places
         self.output_places = output_places
 
+
     def fire(self, fire_unconditionally = False):
+        could_not_finish = False
+        input_performed = False
         if (all(i.tokenIsSufficient() for i in self.input_places)):
             for input in self.input_places:
                 input.trigger()
-            for output in self.output_places:
-                output.trigger()
-            return 0
-        elif (fire_unconditionally):
-            for output in self.output_places:
-                output.trigger()
-            return 1
-        else:
-            return 2
+            input_performed = True
+        if (input_performed):
+            if (all(j.tokenWithinLimit() for j in self.output_places)): 
+                for output in self.output_places:
+                    output.trigger()
+                return 0
+            else:
+                for input in self.input_places:
+                    input.revert()
+                could_not_finish = True
+
+        if (could_not_finish):
+            if (fire_unconditionally):
+                for output in self.output_places:
+                    output.trigger()
+                return 1
+            else:
+                return 2
 
 
 # Arc that goes  place --> transition
@@ -43,6 +61,9 @@ class InputPlace:
     
     def trigger(self):
         self.place.token -= self.tokens_to_be_inputted
+    
+    def revert(self):
+        self.place.token += self.tokens_to_be_inputted
 
 
 # Arc that goes  transition --> place
@@ -51,6 +72,10 @@ class OutputPlace:
         self.id = id
         self.place = place
         self.tokens_to_be_outputted = tokens_to_be_outputted
+
+    def tokenWithinLimit(self):
+        #print(str(self.place.token) + " + " + str(self.tokens_to_be_outputted) + " <= " + str(self.place.token_limit))
+        return self.place.token + self.tokens_to_be_outputted <= self.place.token_limit
 
     def trigger(self):
         self.place.token += self.tokens_to_be_outputted
@@ -110,7 +135,6 @@ class PetriNet:
                         print("Error: Undefined command")
 
             
-
             # Set token
             self.places = []
             for i in range(len(places_from_txt)):
@@ -150,13 +174,19 @@ class PetriNet:
                         for j in self.output:
                             if (j.id == z['id']):
                                 temp_output.append(j)
+
                 transition_instance = Transition(transitions_from_txt[i]['name'], temp_input, temp_output)
                 self.transitions.append(transition_instance)
 
-
-
-
-            
+            for a in self.places:
+                for i in self.input:
+                    if (i.place.name == a.name):
+                        if (a.token_limit < i.tokens_to_be_inputted or a.token_limit == infinity):
+                            a.setTokenLimit(i.tokens_to_be_inputted)
+                for i in self.output:
+                    if (i.place.name == a.name):
+                        if (a.token_limit < i.tokens_to_be_outputted or a.token_limit == infinity):
+                            a.setTokenLimit(i.tokens_to_be_outputted)
 
 
     def fire(self, transition_name, fire_unconditionally = False):
@@ -177,8 +207,9 @@ class PetriNet:
     def printPlaceTokens(self):
         print("---------")
         for i in self.places:
-            print("Place: " + str(i.name) + " -> " + str(i.token) + " tokens")
+            print("Place: " + str(i.name) + " -> " + str(i.token) + " tokens, Limit: " + str(i.token_limit))
         print("---------")
+
 
     def writeCurrentStateToFile(self, filename):
         f = open(filename, "w")
@@ -208,7 +239,7 @@ class PetriNet:
             for j in self.transitions:
                 for k in j.output_places:
                     if (i.id == k.id):
-                        output_out = "/PtoT{" + i.place.name + "," + str(j.name) + "," + str(i.tokens_to_be_outputted) + "}\n"
+                        output_out = "/TtoP{" + i.place.name + "," + str(j.name) + "," + str(i.tokens_to_be_outputted) + "}\n"
                         state_out += output_out
 
         f.write(state_out)
@@ -222,12 +253,5 @@ if __name__ == "__main__":
     petri.printPlaceTokens()
     petri.fire(0)
     petri.printPlaceTokens()
-
-# Example Net
-# 5 5 5 5
-# 2 1 2 - 0 1 2
-# 1 1 2 1 - 1 2 3 0
-# 1 2
-# 2 2
 
 

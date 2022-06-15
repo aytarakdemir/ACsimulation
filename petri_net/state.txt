@@ -12,7 +12,7 @@
 /PtoT{pool2,push,3}
 /PtoT{pool3,approvePR,1}
 
-/PtoT{pool1,createPR,1}
-/PtoT{pool0,push,1}
-/PtoT{pool2,approvePR,1}
-/PtoT{pool3,approvePR,1}
+/TtoP{pool1,createPR,1}
+/TtoP{pool0,push,1}
+/TtoP{pool2,approvePR,1}
+/TtoP{pool3,approvePR,1}
