@@ -198,10 +198,12 @@ class PetriNet:
             if (i.name == transition_name):
                 if (i.fire(fire_unconditionally) == 0):
                     print("'" + transition_name + "': Fired transition")
+                    return (i.name, True)
                 elif (i.fire(fire_unconditionally) == 1):
                     print("'" + transition_name + "': Fired transition with unauthorized privilege escalation")
                 else:
                     print("'" + transition_name + "': Transition could not be fired.")
+                return (i.name, False)
 
 
     def printPlaceTokens(self):
@@ -210,6 +212,11 @@ class PetriNet:
             print("Place: " + str(i.name) + " -> " + str(i.token) + " tokens, Limit: " + str(i.token_limit))
         print("---------")
 
+    def transitionNames(self):
+        transition_names = []
+        for i in self.transitions:
+            transition_names.append(i.name)
+        return transition_names
 
     def writeCurrentStateToFile(self, filename):
         f = open(filename, "w")
