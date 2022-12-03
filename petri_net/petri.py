@@ -3,6 +3,7 @@
 Examine https://en.wikipedia.org/wiki/Petri_net to understand what each class does.
 '''
 import random
+from enum import Enum
 
 infinity = 1000
 
@@ -22,31 +23,48 @@ class Transition:
         self.input_places = input_places
         self.output_places = output_places
 
+    class fireOutMsg(Enum):
+        FIRED = 0
+        FIRED_UNCONDITIONALLY = 1
+        COULD_NOT_BE_FIRED = 2
+        # Below values are only possible if the check_mode is True
+        CAN_BE_FIRED = 3
+        CANNOT_BE_FIRED = 4
 
-    def fire(self, fire_unconditionally = False):
+    def fire(self, fire_unconditionally = False, check_mode = False):
         could_not_finish = False
         input_performed = False
         if (all(i.tokenIsSufficient() for i in self.input_places)):
             for input in self.input_places:
                 input.trigger()
             input_performed = True
+        else:
+            if (check_mode):
+                return self.fireOutMsg.CANNOT_BE_FIRED
         if (input_performed):
-            if (all(j.tokenWithinLimit() for j in self.output_places)): 
-                for output in self.output_places:
-                    output.trigger()
-                return 0
+            if (all(j.tokenWithinLimit() for j in self.output_places)):
+                if (check_mode): 
+                    for input in self.input_places:
+                        input.revert()
+                    could_not_finish = True
+                    return self.fireOutMsg.CAN_BE_FIRED
+                else:
+                    for output in self.output_places:
+                        output.trigger()
+                    return self.fireOutMsg.FIRED
             else:
                 for input in self.input_places:
                     input.revert()
                 could_not_finish = True
+                return self.fireOutMsg.CANNOT_BE_FIRED
 
         if (could_not_finish):
             if (fire_unconditionally):
                 for output in self.output_places:
                     output.trigger()
-                return 1
+                return self.fireOutMsg.FIRED_UNCONDITIONALLY
             else:
-                return 2
+                return self.fireOutMsg.COULD_NOT_BE_FIRED
 
 
 # Arc that goes  place --> transition
@@ -189,6 +207,14 @@ class PetriNet:
                             a.setTokenLimit(i.tokens_to_be_outputted)
 
 
+    def checkIfTransitionFirable(self, transition_name):
+        for i in self.transitions:
+            print(i.name)
+            if (i.name == transition_name):
+                return i.fire(fire_unconditionally = False, check_mode = True) == i.fireOutMsg.CAN_BE_FIRED
+        return -1
+
+
     def fire(self, transition_name, fire_unconditionally = False):
         
         if (random.random() < self.random_privilege_escalation_probability):
@@ -196,10 +222,10 @@ class PetriNet:
             
         for i in self.transitions:
             if (i.name == transition_name):
-                if (i.fire(fire_unconditionally) == 0):
+                if (i.fire(fire_unconditionally) == i.fireOutMsg.FIRED):
                     print("'" + transition_name + "': Fired transition")
                     return (i.name, True)
-                elif (i.fire(fire_unconditionally) == 1):
+                elif (i.fire(fire_unconditionally) == i.fireOutMsg.FIRED_UNCONDITIONALLY):
                     print("'" + transition_name + "': Fired transition with unauthorized privilege escalation")
                 else:
                     print("'" + transition_name + "': Transition could not be fired.")
@@ -256,9 +282,11 @@ class PetriNet:
 
 if __name__ == "__main__":
 
-    petri = PetriNet('infinite_token_loop.txt')
+    petri = PetriNet('net_config/grant_and_revoke_permission.txt')
     petri.printPlaceTokens()
-    petri.fire(0)
+    print(petri.checkIfTransitionFirable("grantPermission"))
+    petri.printPlaceTokens()
+    petri.fire("grantPermission")
     petri.printPlaceTokens()
 
 

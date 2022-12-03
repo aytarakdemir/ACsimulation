@@ -19,7 +19,11 @@ def fireAllRandom(steps):
         petri.printPlaceTokens()
     return trigger_history
 
-#def fireAllComprehensive(steps):
+
+def fireAllComprehensive(steps):
+    trigger_history = []
+    # for i in range(steps):
+        
 
 
 
