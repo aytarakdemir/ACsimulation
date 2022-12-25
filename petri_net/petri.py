@@ -192,19 +192,6 @@ class PetriNet:
                     else:
                         print("Error: Undefined command")
 
-            print(self.places_from_txt)
-            print(self.inputs_from_txt)
-            print(self.outputs_from_txt)
-            print(self.transitions_from_txt)
-
-    def setState(self, state_in):
-        print("BBBBBBB", state_in)
-        self.places_from_txt = state_in['places']
-        self.transitions_from_txt = state_in['transitions']
-        self.inputs_from_txt = state_in['inputs']
-        self.outputs_from_txt = state_in['outputs']
-        print("CCCCCC", self.places_from_txt)
-
 
     def readStateAndSet(self, filename, random_privilege_escalation_probability = 0.0):
             self.readCurrentStateFromFile(filename)
@@ -262,46 +249,6 @@ class PetriNet:
                         if (a.token_limit < i.tokens_to_be_outputted or a.token_limit == infinity):
                             a.setTokenLimit(i.tokens_to_be_outputted)
 
-    def saveState(self):
-
-        id = 0;
-
-        place_temp = []
-        for i in self.places:
-            place_temp.append({"name": i.name, "token":i.token})
-        print("place temp:", place_temp)
-        self.places_from_txt = place_temp
-
-        transition_temp = []
-        for i in self.transitions:
-            transition_temp.append({"name": i.name})
-        self.transitions_from_txt = transition_temp
-
-        input_temp = []
-        for i in self.input:
-            for j in self.transitions:
-                for k in j.input_places:
-                    if (i.id == k.id):
-                        input_temp.append({"id": id, "P": i.place.name, "T": str(j.name), "token_minus": str(i.tokens_to_be_inputted)})
-                        id += 1
-        self.inputs_from_txt = input_temp
-
-        output_temp = []
-        for i in self.output:
-            for j in self.transitions:
-                for k in j.output_places:
-                    if (i.id == k.id):
-                        output_temp.append({"id": id, "T": str(j.name), "P": i.place.name,  "token_plus": str(i.tokens_to_be_outputted)})
-                        id += 1
-        self.outputs_from_txt = output_temp
-
-        return {'places': self.places_from_txt, 'transitions': self.transitions_from_txt, 'inputs': self.inputs_from_txt, 'outputs': self.outputs_from_txt}
-
-
-
-        
-
-        
 
     def writeCurrentStateToFile(self, filename):
         f = open(filename, "w")
@@ -337,6 +284,108 @@ class PetriNet:
         f.write(state_out)
         f.close()
 
+
+    def setState(self, state_in):
+        #print("BBBBBB", self.places_from_txt)
+        self.places_from_txt = state_in['places']
+        self.transitions_from_txt = state_in['transitions']
+        self.inputs_from_txt = state_in['inputs']
+        self.outputs_from_txt = state_in['outputs']
+        #print("CCCCCC", self.places_from_txt)
+
+        # Set token
+        self.places = []
+        for i in range(len(self.places_from_txt)):
+            place_instance = Place(self.places_from_txt[i]["name"], self.places_from_txt[i]["token"])
+            self.places.append(place_instance)
+
+
+        self.input = []
+        for i in range(len(self.inputs_from_txt)):
+            for a in range(len(self.places)):
+                if (self.places[a].name == self.inputs_from_txt[i]['P']):
+                    input_instance = InputPlace(self.inputs_from_txt[i]['id'], self.places[a], self.inputs_from_txt[i]['token_minus'])
+                    self.input.append(input_instance)
+
+
+        self.output = []
+        for i in range(len(self.outputs_from_txt)):
+            for a in range(len(self.places)):
+                if (self.places[a].name == self.outputs_from_txt[i]['P']):
+                    output_instance = OutputPlace(self.outputs_from_txt[i]['id'], self.places[a], self.outputs_from_txt[i]['token_plus'])
+                    self.output.append(output_instance)
+
+
+        self.transitions = []
+
+        for i in range(len(self.transitions_from_txt)):
+            temp_input = []
+            temp_output = []
+            
+            for z in self.inputs_from_txt:
+                if (z['T'] == self.transitions_from_txt[i]['name']):
+                    for j in self.input:
+                        if (j.id == z['id']):
+                            temp_input.append(j)
+            for z in self.outputs_from_txt:        
+                if (z['T']  == self.transitions_from_txt[i]['name']):
+                    for j in self.output:
+                        if (j.id == z['id']):
+                            temp_output.append(j)
+
+            transition_instance = Transition(self.transitions_from_txt[i]['name'], temp_input, temp_output)
+            self.transitions.append(transition_instance)
+
+        for a in self.places:
+            for i in self.input:
+                if (i.place.name == a.name):
+                    if (a.token_limit < int(i.tokens_to_be_inputted) or a.token_limit == infinity):
+                        a.setTokenLimit(int(i.tokens_to_be_inputted))
+            for i in self.output:
+                if (i.place.name == a.name):
+                    if (a.token_limit < int(i.tokens_to_be_outputted) or a.token_limit == infinity):
+                        a.setTokenLimit(int(i.tokens_to_be_outputted))
+
+
+    def saveState(self):
+
+        id = 0;
+
+        #print("DDDDDDDDD",self.places_from_txt)
+        place_temp = []
+        for i in self.places:
+            place_temp.append({"name": i.name, "token":i.token})
+        print("place temp:", place_temp)
+        self.places_from_txt = place_temp
+
+        transition_temp = []
+        for i in self.transitions:
+            transition_temp.append({"name": i.name})
+        self.transitions_from_txt = transition_temp
+
+        input_temp = []
+        for i in self.input:
+            for j in self.transitions:
+                for k in j.input_places:
+                    if (i.id == k.id):
+                        input_temp.append({"id": id, "P": i.place.name, "T": str(j.name), "token_minus": str(i.tokens_to_be_inputted)})
+                        id += 1
+        self.inputs_from_txt = input_temp
+
+        output_temp = []
+        for i in self.output:
+            for j in self.transitions:
+                for k in j.output_places:
+                    if (i.id == k.id):
+                        output_temp.append({"id": id, "T": str(j.name), "P": i.place.name,  "token_plus": str(i.tokens_to_be_outputted)})
+                        id += 1
+        self.outputs_from_txt = output_temp
+
+        return {'places': self.places_from_txt, 'transitions': self.transitions_from_txt, 'inputs': self.inputs_from_txt, 'outputs': self.outputs_from_txt}
+
+
+
+
         
 
 if __name__ == "__main__":
@@ -356,4 +405,4 @@ if __name__ == "__main__":
     petri.fire("push")
     print("AAAAAAAA", petri.saveState())
     petri.setState(temp)
-    #print(petri.saveState())
+    print(petri.saveState())

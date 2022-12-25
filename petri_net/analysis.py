@@ -22,15 +22,29 @@ def fireAllRandom(steps):
 
 def fireAllComprehensive(steps):
     trigger_history = []
+    stack = []
     transition_names_list = petri.transitionNames()
-    for i in range(steps):
-        print("Iteration: " + str(i))
-        firablesArray = []
-        for transition_name in transition_names_list:
-            firablesArray.append(petri.transitionFirable(transition_name))
-        print(firablesArray)
-        transitionFirableStatus = {transition_names_list[i]: firablesArray[i] for i in range(len(transition_names_list))}
-        print(transitionFirableStatus)
+    print(transition_names_list)
+    petri.fire("createPR")
+    petri.fire("approvePR")
+    stack.append(petri.saveState())
+    petri.fire("approvePR")
+    stack.append(petri.saveState())
+    petri.fire("approvePR")
+    petri.fire("push")
+    petri.printPlaceTokens()
+    petri.setState(stack.pop())
+    petri.printPlaceTokens()
+
+
+    # for i in range(steps):
+    #     print("Iteration: " + str(i))
+    #     firablesArray = []
+    #     for transition_name in transition_names_list:
+    #         firablesArray.append(petri.transitionFirable(transition_name))
+    #     print(firablesArray)
+    #     transitionFirableStatus = {transition_names_list[i]: firablesArray[i] for i in range(len(transition_names_list))}
+    #     print(transitionFirableStatus)
 
 
 steps = 4
