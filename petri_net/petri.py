@@ -101,115 +101,16 @@ class OutputPlace:
 
 class PetriNet:
     def __init__(self, filename, random_privilege_escalation_probability = 0.0):
-        self.random_privilege_escalation_probability = random_privilege_escalation_probability
-
-        places_from_txt = []
-        inputs_from_txt = []
-        outputs_from_txt = []
-        transitions_from_txt = []
-
-        with open(filename) as f:    
-            lines = f.readlines()
-            id = 0
-            for cur_line in lines:
-                cur_line.replace(" ", "")
-                if (cur_line[-1] != '\n'):
-                    cur_line += '\n' 
-                if (cur_line[0] == '/'):
-                    if(cur_line[1:6] == "place"):
-                        inside = cur_line[7:-2].split(",")
-                        place_info = {
-                            "name": inside[0],
-                            "token": int(inside[1])
-                        }
-                        places_from_txt.append(place_info)
-                    elif(cur_line[1:11] == "transition"):
-                        inside = cur_line[12:-2].split(",")
-                        transition_info = {
-                            "name": inside[0],
-                        }
-                        transitions_from_txt.append(transition_info)
-                    elif(cur_line[1:5] == "PtoT"):
-                        inside = cur_line[6:-2].split(",")
-                        input_info = {
-                            "id": id,
-                            "P": inside[0],
-                            "T": inside[1],
-                            "token_minus": int(inside[2])
-                        }
-                        id += 1
-                        inputs_from_txt.append(input_info)
-                    elif(cur_line[1:5] == "TtoP"): 
-                        inside = cur_line[6:-2].split(",")
-                        output_info = {
-                            "id": id,
-                            "T": inside[0],
-                            "P": inside[1],
-                            "token_plus": int(inside[2])
-                        }
-                        id += 1
-                        outputs_from_txt.append(output_info)
-                    else:
-                        print("Error: Undefined command")
-
-            
-            # Set token
-            self.places = []
-            for i in range(len(places_from_txt)):
-                place_instance = Place(places_from_txt[i]["name"], places_from_txt[i]["token"])
-                self.places.append(place_instance)
-
-
-            self.input = []
-            for i in range(len(inputs_from_txt)):
-                for a in range(len(self.places)):
-                    if (self.places[a].name == inputs_from_txt[i]['P']):
-                        input_instance = InputPlace(inputs_from_txt[i]['id'], self.places[a], inputs_from_txt[i]['token_minus'])
-                        self.input.append(input_instance)
-
-
-            self.output = []
-            for i in range(len(outputs_from_txt)):
-                for a in range(len(self.places)):
-                    if (self.places[a].name == outputs_from_txt[i]['P']):
-                        output_instance = OutputPlace(outputs_from_txt[i]['id'], self.places[a], outputs_from_txt[i]['token_plus'])
-                        self.output.append(output_instance)
-
-
-            self.transitions = []
-
-            for i in range(len(transitions_from_txt)):
-                temp_input = []
-                temp_output = []
-                
-                for z in inputs_from_txt:
-                    if (z['T'] == transitions_from_txt[i]['name']):
-                        for j in self.input:
-                            if (j.id == z['id']):
-                                temp_input.append(j)
-                for z in outputs_from_txt:        
-                    if (z['T']  == transitions_from_txt[i]['name']):
-                        for j in self.output:
-                            if (j.id == z['id']):
-                                temp_output.append(j)
-
-                transition_instance = Transition(transitions_from_txt[i]['name'], temp_input, temp_output)
-                self.transitions.append(transition_instance)
-
-            for a in self.places:
-                for i in self.input:
-                    if (i.place.name == a.name):
-                        if (a.token_limit < i.tokens_to_be_inputted or a.token_limit == infinity):
-                            a.setTokenLimit(i.tokens_to_be_inputted)
-                for i in self.output:
-                    if (i.place.name == a.name):
-                        if (a.token_limit < i.tokens_to_be_outputted or a.token_limit == infinity):
-                            a.setTokenLimit(i.tokens_to_be_outputted)
+        self.places_from_txt = []
+        self.inputs_from_txt = []
+        self.outputs_from_txt = []
+        self.transitions_from_txt = []
+        self.random_privilege_escalation_probability = random_privilege_escalation_probability   
+        self.readStateAndSet(filename, self.random_privilege_escalation_probability)
 
 
     def transitionFirable(self, transition_name):
         for i in self.transitions:
-            print(i.name)
             if (i.name == transition_name):
                 return i.fire(fire_unconditionally = False, check_mode = True) == i.fireOutMsg.CAN_BE_FIRED
         return -1
@@ -238,11 +139,120 @@ class PetriNet:
             print("Place: " + str(i.name) + " -> " + str(i.token) + " tokens, Limit: " + str(i.token_limit))
         print("---------")
 
+
     def transitionNames(self):
         transition_names = []
         for i in self.transitions:
             transition_names.append(i.name)
         return transition_names
+
+
+    def readCurrentStateFromFile(self, filename):
+        with open(filename) as f:    
+            lines = f.readlines()
+            id = 0
+            for cur_line in lines:
+                cur_line.replace(" ", "")
+                if (cur_line[-1] != '\n'):
+                    cur_line += '\n' 
+                if (cur_line[0] == '/'):
+                    if(cur_line[1:6] == "place"):
+                        inside = cur_line[7:-2].split(",")
+                        place_info = {
+                            "name": inside[0],
+                            "token": int(inside[1])
+                        }
+                        self.places_from_txt.append(place_info)
+                    elif(cur_line[1:11] == "transition"):
+                        inside = cur_line[12:-2].split(",")
+                        transition_info = {
+                            "name": inside[0],
+                        }
+                        self.transitions_from_txt.append(transition_info)
+                    elif(cur_line[1:5] == "PtoT"):
+                        inside = cur_line[6:-2].split(",")
+                        input_info = {
+                            "id": id,
+                            "P": inside[0],
+                            "T": inside[1],
+                            "token_minus": int(inside[2])
+                        }
+                        id += 1
+                        self.inputs_from_txt.append(input_info)
+                    elif(cur_line[1:5] == "TtoP"): 
+                        inside = cur_line[6:-2].split(",")
+                        output_info = {
+                            "id": id,
+                            "T": inside[0],
+                            "P": inside[1],
+                            "token_plus": int(inside[2])
+                        }
+                        id += 1
+                        self.outputs_from_txt.append(output_info)
+                    else:
+                        print("Error: Undefined command")
+
+            print("Places:", self.places_from_txt)
+            print(self.inputs_from_txt)
+            print(self.outputs_from_txt)
+            print(self.transitions_from_txt)
+
+    def readStateAndSet(self, filename, random_privilege_escalation_probability = 0.0):
+            self.readCurrentStateFromFile(filename)
+
+            # Set token
+            self.places = []
+            for i in range(len(self.places_from_txt)):
+                place_instance = Place(self.places_from_txt[i]["name"], self.places_from_txt[i]["token"])
+                self.places.append(place_instance)
+
+
+            self.input = []
+            for i in range(len(self.inputs_from_txt)):
+                for a in range(len(self.places)):
+                    if (self.places[a].name == self.inputs_from_txt[i]['P']):
+                        input_instance = InputPlace(self.inputs_from_txt[i]['id'], self.places[a], self.inputs_from_txt[i]['token_minus'])
+                        self.input.append(input_instance)
+
+
+            self.output = []
+            for i in range(len(self.outputs_from_txt)):
+                for a in range(len(self.places)):
+                    if (self.places[a].name == self.outputs_from_txt[i]['P']):
+                        output_instance = OutputPlace(self.outputs_from_txt[i]['id'], self.places[a], self.outputs_from_txt[i]['token_plus'])
+                        self.output.append(output_instance)
+
+
+            self.transitions = []
+
+            for i in range(len(self.transitions_from_txt)):
+                temp_input = []
+                temp_output = []
+                
+                for z in self.inputs_from_txt:
+                    if (z['T'] == self.transitions_from_txt[i]['name']):
+                        for j in self.input:
+                            if (j.id == z['id']):
+                                temp_input.append(j)
+                for z in self.outputs_from_txt:        
+                    if (z['T']  == self.transitions_from_txt[i]['name']):
+                        for j in self.output:
+                            if (j.id == z['id']):
+                                temp_output.append(j)
+
+                transition_instance = Transition(self.transitions_from_txt[i]['name'], temp_input, temp_output)
+                self.transitions.append(transition_instance)
+
+            for a in self.places:
+                for i in self.input:
+                    if (i.place.name == a.name):
+                        if (a.token_limit < i.tokens_to_be_inputted or a.token_limit == infinity):
+                            a.setTokenLimit(i.tokens_to_be_inputted)
+                for i in self.output:
+                    if (i.place.name == a.name):
+                        if (a.token_limit < i.tokens_to_be_outputted or a.token_limit == infinity):
+                            a.setTokenLimit(i.tokens_to_be_outputted)
+
 
     def writeCurrentStateToFile(self, filename):
         f = open(filename, "w")
@@ -282,11 +292,15 @@ class PetriNet:
 
 if __name__ == "__main__":
 
-    petri = PetriNet('net_config/grant_and_revoke_permission.txt')
+    petri = PetriNet('net_config/pull_request_review.txt')
     petri.printPlaceTokens()
-    print(petri.transitionFirable("grantPermission"))
+    print(petri.transitionFirable("createPR"))
     petri.printPlaceTokens()
-    petri.fire("grantPermission")
+    petri.fire("createPR")
     petri.printPlaceTokens()
-
+    petri.fire("approvePR")
+    petri.fire("push")
+    petri.fire("approvePR")
+    petri.fire("approvePR")
+    petri.fire("push")
 
