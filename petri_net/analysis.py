@@ -22,10 +22,18 @@ def fireAllRandom(steps):
 
 def fireAllComprehensive(steps):
     trigger_history = []
-    # for i in range(steps):
-        
-
+    transition_names_list = petri.transitionNames()
+    for i in range(steps):
+        print("Iteration: " + str(i))
+        firablesArray = []
+        for transition_name in transition_names_list:
+            firablesArray.append(petri.transitionFirable(transition_name))
+        print(firablesArray)
+        transitionFirableStatus = {transition_names_list[i]: firablesArray[i] for i in range(len(transition_names_list))}
+        print(transitionFirableStatus)
 
 
 steps = 4
-print("Trigger History: \n" + str(fireAllRandom(steps)))
+# print("Trigger History: \n" + str(fireAllRandom(steps)))
+
+fireAllComprehensive(steps)

@@ -207,7 +207,7 @@ class PetriNet:
                             a.setTokenLimit(i.tokens_to_be_outputted)
 
 
-    def checkIfTransitionFirable(self, transition_name):
+    def transitionFirable(self, transition_name):
         for i in self.transitions:
             print(i.name)
             if (i.name == transition_name):
@@ -284,7 +284,7 @@ if __name__ == "__main__":
 
     petri = PetriNet('net_config/grant_and_revoke_permission.txt')
     petri.printPlaceTokens()
-    print(petri.checkIfTransitionFirable("grantPermission"))
+    print(petri.transitionFirable("grantPermission"))
     petri.printPlaceTokens()
     petri.fire("grantPermission")
     petri.printPlaceTokens()
