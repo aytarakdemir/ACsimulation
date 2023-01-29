@@ -72,7 +72,7 @@ class InputPlace:
     def __init__(self, id, place, tokens_to_be_inputted = 1):
         self.id = id
         self.place = place
-        self.tokens_to_be_inputted = tokens_to_be_inputted 
+        self.tokens_to_be_inputted = int(tokens_to_be_inputted) 
 
     def tokenIsSufficient(self):
         return self.place.token >= self.tokens_to_be_inputted
@@ -89,7 +89,7 @@ class OutputPlace:
     def __init__(self, id, place, tokens_to_be_outputted = 1):
         self.id = id
         self.place = place
-        self.tokens_to_be_outputted = tokens_to_be_outputted
+        self.tokens_to_be_outputted = int(tokens_to_be_outputted)
 
     def tokenWithinLimit(self):
         #print(str(self.place.token) + " + " + str(self.tokens_to_be_outputted) + " <= " + str(self.place.token_limit))

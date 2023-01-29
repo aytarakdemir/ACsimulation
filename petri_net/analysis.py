@@ -20,21 +20,41 @@ def fireAllRandom(steps):
     return trigger_history
 
 
-def fireAllComprehensive(steps):
+queue = []
+
+def fireAllBFS(depth):
     trigger_history = []
-    stack = []
+    queue = []
     transition_names_list = petri.transitionNames()
-    print(transition_names_list)
-    petri.fire("createPR")
-    petri.fire("approvePR")
-    stack.append(petri.saveState())
-    petri.fire("approvePR")
-    stack.append(petri.saveState())
-    petri.fire("approvePR")
-    petri.fire("push")
-    petri.printPlaceTokens()
-    petri.setState(stack.pop())
-    petri.printPlaceTokens()
+    #print(transition_names_list)
+
+    queue.append(petri.saveState())
+
+    for level in range(depth):
+        print("LEVEL: " + str(level))
+        petri.setState(queue[0])
+        for transition_name in transition_names_list:
+            print(transition_name)
+            if (petri.transitionFirable(transition_name)):
+                petri.fire(transition_name)
+                trigger_history.append(transition_name)
+                queue.append(petri.saveState())
+                petri.setState(queue[-1])
+        queue.pop(0)
+
+    print(trigger_history)
+
+
+    # petri.fire("createPR")
+    # petri.fire("approvePR")
+    # queue.append(petri.saveState())
+    # petri.fire("approvePR")
+    # queue.append(petri.saveState())
+    # petri.fire("approvePR")
+    # petri.fire("push")
+    # petri.printPlaceTokens()
+    # petri.setState(queue.pop())
+    # petri.printPlaceTokens()
 
 
     # for i in range(steps):
@@ -47,7 +67,7 @@ def fireAllComprehensive(steps):
     #     print(transitionFirableStatus)
 
 
-steps = 4
+depth = 9
 # print("Trigger History: \n" + str(fireAllRandom(steps)))
 
-fireAllComprehensive(steps)
+fireAllBFS(depth)
